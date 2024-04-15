@@ -1,0 +1,28 @@
+﻿@model IEnumerable<JizdniRad.Models.Stop>
+
+
+<h1>Stops</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                STOPS
+            </th>
+            <th>
+                <a asp-action="CreateStop">Vytvořit Stop</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="EditStop" asp-route-id="@item.ID">Edit</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

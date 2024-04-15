@@ -1,0 +1,10 @@
+﻿p#minutes {
+    font-size: smaller;
+    display: inline;
+}
+p#hours{
+    display:inline;
+}
+div#maseterRows:nth-child(2n+1) {
+    background-color:coral;
+}

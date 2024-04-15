@@ -1,0 +1,61 @@
+﻿@model List<Departure>
+
+<div class="container">
+
+
+    @for (int i = 1; i < 25; i++)
+    {
+
+        var hourDepraturesNormal = Model.Where(x => x.Time.Hours == i && x.WeekDay == WeekDay.Normal).ToList();
+        var hourDepraturesSaturday = Model.Where(x => x.Time.Hours == i && x.WeekDay == WeekDay.Saturday).ToList();
+        var hourDepraturesSunday = Model.Where(x => x.Time.Hours == i && x.WeekDay == WeekDay.Sunday).ToList();
+        List<string> minutesStringNormal = new List<string>();
+        List<string> minutesStringSaturday = new List<string>();
+        List<string> minutesStringSunday = new List<string>();
+        foreach (var item in hourDepraturesNormal)
+        {
+            minutesStringNormal.Add(item.Time.Minutes.ToString());
+        }
+        foreach (var item in hourDepraturesSaturday)
+        {
+            minutesStringSaturday.Add(item.Time.Minutes.ToString());
+        }
+        foreach (var item in hourDepraturesSunday)
+        {
+            minutesStringSunday.Add(item.Time.Minutes.ToString());
+        }
+        string outputNormal = string.Join(", ", minutesStringNormal);
+        string outputSaturday = string.Join(", ", minutesStringSaturday);
+        string outputSunday = string.Join(", ", minutesStringSunday);
+
+
+
+
+        <div class="row" id="maseterRows">
+            <div class="col-6 border-end border-dark container">
+                <div class="row">
+                    <div class="col-1 border-end border-dark">
+                        <p id="hours">@i</p>
+                    </div>
+                    <div class="col-11">
+                        <p id="minutes">@outputNormal</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-3 border-end border-dark">
+                <p id="minutes"> @outputSaturday</p>
+            </div>
+            <div class="col-3">
+
+
+                <p id="minutes">@outputSunday</p>
+
+
+
+            </div>
+        </div>
+
+
+    }
+</div>

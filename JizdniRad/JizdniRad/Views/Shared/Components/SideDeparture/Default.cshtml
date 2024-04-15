@@ -1,0 +1,52 @@
+﻿@model List<LineStop>
+
+@{
+
+    bool passed = false;
+    if (this.ViewBag.from == null)
+    {
+        passed = true;
+    }
+    int? minutes = 0;
+}
+<div class="container">
+
+
+
+
+    @foreach (LineStop stop in Model)
+    {
+        <div class="row">
+            @if (stop == ViewBag.from)
+            {
+                passed = true;
+            }
+            @if (passed)
+            {
+                <div class="col-2">
+                    @minutes
+                </div>
+                <div class="col-10">
+                    <a asp-action="Detail" asp-controller="Line" asp-route-stopIDfrom="@stop.ID">@stop.Stop.Name</a>
+                    
+                </div>
+                    
+                
+
+
+                minutes += stop.TimeToNextStop;
+
+            }
+            else
+            {
+                <div class="col-2">
+                </div>
+                <div class="col-10">
+                    <a asp-action="Detail" asp-controller="Line" asp-route-stopIDfrom="@stop.ID">@stop.Stop.Name</a>
+                </div>
+            }
+
+        </div>
+    }
+
+</div>

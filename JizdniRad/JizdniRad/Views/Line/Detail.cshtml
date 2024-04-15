@@ -1,0 +1,94 @@
+﻿@using JizdniRad.Models
+@model Line
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-1 border border-2 border-dark">
+            <h1>@Model.Name</h1>
+        </div>
+        <div class="col-2 border border-2 border-dark">
+            PID
+        </div>
+        <div class="col-8 container border border-2 border-dark">
+            <div class="row">
+                <p id="testsmall">PRAŽSKÁ INTEGROVANÁ DOPRAVA (PID) - Městská doprava Praha</p>
+            </div>
+            <div class="row">
+                <p id="testsmall">Dopravce: Dopravní podnik hl. m. Prahy, akciová společnost,Sokolovská 42/217, Vysočany,190 00 Praha 9</p>
+            </div>
+            <div class="row">
+                <p id="testsmall">Informace o provozu PID na tel.: 296 191 817; na internetu: www.dpp.cz</p>
+            </div>
+
+        </div>
+        <div class="col-1 container border border-2 border-dark">
+
+            <div class="row">
+                Platnost:
+            </div>
+            <div class="row">
+                od @Model.ValidTo.ToShortDateString()
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-3 border border-2 border-dark container">
+            <div class="row">
+                <div class="col-1">
+                    <p id="testsmall">
+                        orientační doba jízdy (min)
+                    </p>
+
+                </div>
+                <div class="col-11">
+                    <h4 class="text-end">Tarifní pásmo @Model.Zone</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-9 container border border-2 border-dark">
+            <div class="row ">
+
+
+                <div class="col-6 ">
+                    <h5 class="text-center">PRACOVNÍ DEN (⚒)</h5>
+                </div>
+                <div class="col-3 ">
+                    <h5 class="text-center"> SOBOTA (⑥)</h5>
+                </div>
+                <div class="col-3">
+                    <h5 class="text-center">NEDĚLE (✝)</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-3  container border border-2 border-dark">
+            @if (this.ViewBag.from != null)
+            {
+                <vc:side-departure stops="@this.ViewBag.Stops" from="this.ViewBag.from" line="@Model"></vc:side-departure>
+            }
+            else
+            {
+                <vc:side-departure stops="@this.ViewBag.Stops" line="@Model"></vc:side-departure>
+            }
+        </div>
+        <div class="col-9  container border border-2 border-dark">
+
+
+            <vc:departure-row departures="@this.ViewBag.depratures"></vc:departure-row>
+
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
