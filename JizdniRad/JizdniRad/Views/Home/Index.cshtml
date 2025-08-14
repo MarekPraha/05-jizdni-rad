@@ -9,8 +9,16 @@
 
             <div class="card-header">@Model[i].Name</div>
             <div class="card-body">
-                
-                Směr: @this.ViewBag.LastStops[i].Name
+                @if (this.ViewBag.LastStops.Count > i)
+                {
+                    <span>Směr: </span> @this.ViewBag.LastStops[i].Name
+                }
+                else
+                {
+                    <span>
+                      Směr: Nenalezeno
+                    </span>
+                }
             </div>
             <div class="card-footer">
                 @if (@Model[i].FirstStopID!=null)
