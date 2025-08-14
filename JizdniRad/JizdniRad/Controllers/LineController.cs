@@ -31,17 +31,24 @@ namespace JizdniRad.Controllers
             }
             if (stopIDfrom!=null)
             {
-                lineStopfrom = db.lineStops.Where(x => x.LineID == id && x.StopID == stopIDfrom).FirstOrDefault();
+                lineStopfrom = db.lineStops.Where(x => x.LineID == id && x.ID == stopIDfrom).FirstOrDefault();
                 if (lineStopfrom==null)
                 {
                     return RedirectToAction("Detail",new {id=line.ID});
                 }
                 var current = db.lineStops.Where(x => x.ID == line.FirstStopID).FirstOrDefault();
 
+                var linestopsLocal = db.lineStops.Where(x => x.LineID == line.ID).ToList();
+
                 while (current.ID != lineStopfrom.ID)
                 {
                     offset += current.TimeToNextStop ?? 0;
-                    current = db.lineStops.Where(x => x.ID == current.NextLineStopID).FirstOrDefault();
+                    current = linestopsLocal.Where(x => x.ID == current.NextLineStopID).FirstOrDefault();
+
+                    if (current == null)
+                    {
+                        break;
+                    }
                     //Debug.WriteLine(current.ID);
                 }
              
@@ -53,9 +60,12 @@ namespace JizdniRad.Controllers
 
             List<LineStop> stops = new List<LineStop>();
             stops.Add(db.lineStops.Include(x=>x.Stop).Include(x=>x.Line).Where(x => x.ID == line.FirstStopID).FirstOrDefault());
-            while(stops.Last().NextLineStopID!=null)
+
+            List<LineStop> lineStopLocal = db.lineStops.Include(x=>x.Stop).Include(x=>x.Line).Where(x => x.LineID == line.ID).ToList();
+
+            while (stops.Last().NextLineStopID!=null)
             {
-                stops.Add(db.lineStops.Include(x => x.Stop).Include(x => x.Line).Where(x => x.ID == stops.Last().NextLineStopID).FirstOrDefault());
+                stops.Add(lineStopLocal.Where(x => x.ID == stops.Last().NextLineStopID).FirstOrDefault());
             }
             this.ViewBag.Stops = stops;
 
